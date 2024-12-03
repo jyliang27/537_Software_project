@@ -54,7 +54,7 @@ def findCmax(dataframe:str,time:str, concentration:str)->float:
     concentration: name of dataframe column containing concentration data
 
     Outputs:
-    Returns a 1x2 array containing the values for Cmax and Tmax.
+    Returns a 1x2 tuple containing the values for Cmax and Tmax.
     """
     for i in dataframe.index:
         if dataframe[concentration][i]==np.nanmax(dataframe[concentration]):
@@ -111,7 +111,7 @@ def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> 
     lnConc: the name of the dataframe column with ln(drug concentration)
 
     Output:
-    Returns a 1x2 array with values for Co and k.
+    Returns a 1x2 tuple with values for Co and k.
     """
     x = []
     y = []
@@ -134,7 +134,7 @@ def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> 
 
 def findPK(dataframe:str,time:str, concentration:str,lnConc:str, percent_threshold:float, model:str="1 compartment, IV")->float:
     """
-    This function takes in a dataframe, the names of any columns of interest, a percent threshold, and the desired PK model to be fit. It passes these arguments to the functions findCo, findCmax, and findT_half, and returns a 1x5 array with the collected function outputs.
+    This function takes in a dataframe, the names of any columns of interest, a percent threshold, and the desired PK model to be fit. It passes these arguments to the functions findCo, findCmax, and findT_half, and returns a 1x5 tuple with the collected function outputs.
 
     Inputs:
     dataframe: the name of the dataframe
@@ -145,7 +145,7 @@ def findPK(dataframe:str,time:str, concentration:str,lnConc:str, percent_thresho
     model: keyword for the PK model to be applied.
 
     Outputs:
-    Returns a 1x5 array with values for Co, k, Cmax, Tmax, t_half
+    Returns a 1x5 tuple with values for Co, k, Cmax, Tmax, t_half
     """
     result1 = findCo(dataframe, time, lnConc, model)
     result2 = findCmax(dataframe,time, concentration)
