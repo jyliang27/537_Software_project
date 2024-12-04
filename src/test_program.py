@@ -9,29 +9,35 @@ from program import findCo
 from program import findT_half
 from program import findPK
 
-testdf=LoadData("Test_PK.xlsx")
+testdf=LoadData("src/Test_PK.xlsx")
 testdf2=PrepData(testdf,"IV Concentration","LnConc")
 
 class TestModelPK(unittest.TestCase):
-    print("test1 is running")
     def test_LoadData(self):
-        result=LoadData('Test_PK.xlsx')
+        result=LoadData('src/Test_PK.xlsx')
         self.assertIsInstance(result,pd.DataFrame)
     def test_badLoadData(self):
-        print("test is running")
         result=LoadData("Functional Specification.docx")
-        self.assertIsInstance(result,pd.DataFrame)
+        with self.assertRaises(Exception):
+            self.assertIsInstance(result,pd.DataFrame)
     
-
     def test_PrepData(self):
         result=PrepData(testdf,"IV Concentration","LnConc")
         self.assertNotIn(np.nan,result)
+        self.assertGreater(result.size,testdf.size)
         self.assertIsInstance(result,pd.DataFrame)
-    
+    def test_badPrepData(self):
+        with self.assertRaises(Exception):
+            PrepData(testdf,"Not Real Column Name","LnConc")
 
     def test_findT_half(self):
         result=findT_half(testdf2,"Time","IV Concentration",10)
-        #self.assertNotIn(np.nan,PrepData(result),"No nulls")
+        print(result)
+        for i in testdf2.index:
+            for j in testdf2.index:
+                if j>i and testdf2["Time"][j]-testdf2["Time"][i]==result:
+                    self.assertAlmostEquals(testdf2["IV Concentration"][j]/testdf2["IV Concentration"][i],0.5,delta=0.05)
+                    break
 
     def test_findCmax(self):
         result=findCmax(testdf2,"Time","IV Concentration")
@@ -40,13 +46,14 @@ class TestModelPK(unittest.TestCase):
 
     def test_findCo(self):
         result=findCo(testdf2,"Time","LnConc")
-        #self.assertNotIn(np.nan,PrepData(result),"No nulls")
+        with self.assertRaises(Exception):
+            findCo(testdf2,"Time","LnConc","not an established model")
         self.assertEquals(len(result),2)
 
     def test_findPK(self):
         result=findPK(testdf2,"Time","IV Concentration","LnConc",10)
-        self.assertIsInstance(result,tuple)     
+        self.assertIsInstance(result,tuple)
         self.assertEquals(len(result),5)
-    
-        if __name__ == '__main__':
-            unittest.main()
+
+if __name__ == '__main__':
+    unittest.main()

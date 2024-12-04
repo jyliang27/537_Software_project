@@ -42,6 +42,7 @@ def PrepData(dataframe:str,concentration:str,lnConc:str):
             ln_list.append(np.nan)
     tempdf[lnConc]=ln_list
     tempdf.dropna(subset=[lnConc],inplace=True)
+    tempdf.reset_index(drop=True,inplace=True)
     return tempdf
 
 def findCmax(dataframe:str,time:str, concentration:str)->float:
