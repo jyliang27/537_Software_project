@@ -13,5 +13,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(),
+    packages=find_packages(where='src'),  # Specify the source directory
+    package_dir={'': 'src'},
 )
