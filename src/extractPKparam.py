@@ -72,7 +72,7 @@ def findCmax(dataframe:str,time:str, concentration:str)->float:
     print("Tmax=",Tmax)
     return Cmax, Tmax
 
-def findT_half(dataframe:str, time:str, concentration:str, percent_threshold:float)->float:
+def findT_half(dataframe:str, time:str, concentration:str, thalf_threshold:float)->float:
     """
     This takes in a dataframe, columns of interest, and a threshold expressed as a percent. Scans the data to find timepoints at which drug concentration has decreased by roughly 50%.
     Note: Since data might be sparse, drug concentration at the latter time point can fall within the percent_threshold of the target value.
@@ -95,7 +95,7 @@ def findT_half(dataframe:str, time:str, concentration:str, percent_threshold:flo
                 max_idx=i
         for j in dataframe.index:
             if i > max_idx and j>i:
-                thresh=dataframe[concentration][j]*(percent_threshold/100)
+                thresh=dataframe[concentration][j]*(thalf_threshold/100)
                 if dataframe[concentration][i]/2 >= dataframe[concentration][j]-thresh and dataframe[concentration][i]/2 <= dataframe[concentration][j]+thresh:
                     t_half=dataframe[time][j]-dataframe[time][i]
                     break
@@ -133,7 +133,7 @@ def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> 
     k = float(-1*testmodel.coef_)
     return Co,k
 
-def findPK(dataframe:str,time:str, concentration:str,lnConc:str, percent_threshold:float, model:str="1 compartment, IV")->float:
+def findPK(dataframe:str,time:str, concentration:str,lnConc:str, thalf_threshold:float, model:str="1 compartment, IV")->float:
     """
     This function takes in a dataframe, the names of any columns of interest, a percent threshold, and the desired PK model to be fit. It passes these arguments to the functions findCo, findCmax, and findT_half, and returns a 1x5 tuple with the collected function outputs.
 
@@ -150,7 +150,7 @@ def findPK(dataframe:str,time:str, concentration:str,lnConc:str, percent_thresho
     """
     result1 = findCo(dataframe, time, lnConc, model)
     result2 = findCmax(dataframe,time, concentration)
-    result3 = findT_half(dataframe, time, concentration, percent_threshold)
+    result3 = findT_half(dataframe, time, concentration, thalf_threshold)
     k = result1[1]
     Co = result1[0]
     Cmax = result2[0]

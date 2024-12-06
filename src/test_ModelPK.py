@@ -1,16 +1,17 @@
-import unittest
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-from program import LoadData
-from program import PrepData
-from program import findCmax
-from program import findCo
-from program import findT_half
-from program import findPK
+from src.extractPKparam import LoadData
+from src.extractPKparam import PrepData
+from src.extractPKparam import findCmax
+from src.extractPKparam import findCo
+from src.extractPKparam import findT_half
+from src.extractPKparam import findPK
+from simulatePK import findSubtherapeuticTail
 
 testdf=LoadData("src/Test_PK.xlsx")
 testdf2=PrepData(testdf,"IV Concentration","LnConc")
+testresult=findPK(testdf2,"Time","IV Concentration","LnConc",10)
 
 class TestModelPK(unittest.TestCase):
     def test_LoadData(self):
@@ -41,19 +42,25 @@ class TestModelPK(unittest.TestCase):
 
     def test_findCmax(self):
         result=findCmax(testdf2,"Time","IV Concentration")
-        self.assertEquals(result[0],np.nanmax(testdf2["IV Concentration"]))
-        self.assertEquals(len(result),2)
+        self.assertEqual(result[0],np.nanmax(testdf2["IV Concentration"]))
+        self.assertEqual(len(result),2)
 
     def test_findCo(self):
         result=findCo(testdf2,"Time","LnConc")
         with self.assertRaises(Exception):
             findCo(testdf2,"Time","LnConc","not an established model")
-        self.assertEquals(len(result),2)
+        self.assertEqual(len(result),2)
 
     def test_findPK(self):
         result=findPK(testdf2,"Time","IV Concentration","LnConc",10)
         self.assertIsInstance(result,tuple)
-        self.assertEquals(len(result),5)
+        self.assertEqual(len(result),5)
+
+    def test_findSubtherapeuticTail(self):
+        result=findSubtherapeuticTail(testresult,10,3,simruntime=75)
+        result2=findSubtherapeuticTail(testresult,10,3,setCo=1000)
+        self.assertEqual(result,121.5)
+        self.assertGreater(result2,result)
 
 if __name__ == '__main__':
     unittest.main()
