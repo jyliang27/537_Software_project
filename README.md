@@ -4,3 +4,10 @@ ModelPK is a package designed to extract basic information about the pharmacokin
 
 Target users:
 for bench scientists who have little experience with PK modeling
+
+Background
+
+
+Installation and Use
+
+
