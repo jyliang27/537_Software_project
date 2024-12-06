@@ -17,8 +17,9 @@ modellib={MODEL1:model_1C}
 
 def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_target:float, numiterations: float=1000, starttime:float=0, simruntime:float=100, setCo:float="default", model:str=MODEL1):
     """
-    Takes in extracted PK parameters, Antimony model, model parameters, and values for target subtherapeutic concentration and threshold. Simulates model and returns the first timepoint at which subtherapeutic concentration is reached.
-    Allows users to find i) time to subtherpeutic tail based on experimental data and ii) time to subtherpeutic tail with varying Co (here, a proxy for drug dose administered via IV bolus)
+    Takes in extracted PK parameters, Antimony model, model parameters, and values for target subtherapeutic concentration and threshold. Simulates model and returns the first timepoint at which subtherapeutic concentration is reached--please assign this result to a variable.
+    This function also generates a plot of the simulation. 
+    The function allows users to find i) time to subtherpeutic tail based on experimental data and ii) time to subtherpeutic tail with varying Co (here, a proxy for drug dose administered via IV bolus)
 
     Inputs:
     findPKresult: variable assigned to findPK results, input as a string
@@ -32,7 +33,7 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
 
     Output:
     A plot of the simulated change in drug concentration over time with the chosen Co
-    A float representing the time (units consistent with experimental data) it takes for drug concentrations to reach subtherapeutic levels.
+    A float representing the time (units consistent with experimental data) it takes for drug concentrations to reach subtherapeutic levels. Please assign this result to a variable.
     """
     try:
         modeltoload = modellib[model]
