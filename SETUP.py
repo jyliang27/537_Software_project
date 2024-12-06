@@ -2,10 +2,6 @@ from setuptools import setup, find_packages
 setup(
     name = "ModelPK",
     version = "0.1",
-    #packages = find_packages(),
-    #install_requires=["tellurium","numpy","pandas","python-dateutil","scikit-learn","scipy",
-     #                 "six","threadpoolctl","tzdata","joblib","pytz"
-    #],
     author="Jia Liang",
     author_email="jyliang@uw.edu",
     description="ModelPK is a package designed to extract basic information about the pharmacokinetic profile of a drug from experimental data.",
@@ -17,4 +13,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    packages=['ModelPK'],
+    zip_safe=False
 )
