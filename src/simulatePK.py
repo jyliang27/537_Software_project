@@ -15,7 +15,7 @@ k=.005
 
 modellib={MODEL1:model_1C}
 
-def findSubtherapeuticTail(findPKresult:str, subther_threshold:float,  subther_target:float, numiterations: float=1000, starttime:float=0, simruntime:float=100, setCo:float="default", model:str=MODEL1):
+def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_target:float, numiterations: float=1000, starttime:float=0, simruntime:float=100, setCo:float="default", model:str=MODEL1):
     """
     Takes in extracted PK parameters, Antimony model, model parameters, and values for target subtherapeutic concentration and threshold. Simulates model and returns the first timepoint at which subtherapeutic concentration is reached.
     Allows users to find i) time to subtherpeutic tail based on experimental data and ii) time to subtherpeutic tail with varying Co (here, a proxy for drug dose administered via IV bolus)

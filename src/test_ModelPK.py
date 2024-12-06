@@ -8,7 +8,7 @@ from src.extractPKparam import findCmax
 from src.extractPKparam import findCo
 from src.extractPKparam import findT_half
 from src.extractPKparam import findPK
-from simulatePK import findSubtherapeuticTail
+from simulatePK import findSubtherapeuticTime
 
 testdf=LoadData("src/Test_PK.xlsx")
 testdf2=PrepData(testdf,"IV Concentration","LnConc")
@@ -57,9 +57,9 @@ class TestModelPK(unittest.TestCase):
         self.assertIsInstance(result,tuple)
         self.assertEqual(len(result),5)
 
-    def test_findSubtherapeuticTail(self):
-        result=findSubtherapeuticTail(testresult,10,3,simruntime=75)
-        result2=findSubtherapeuticTail(testresult,10,3,setCo=1000)
+    def test_findSubtherapeuticTime(self):
+        result=findSubtherapeuticTime(testresult,10,3,simruntime=75)
+        result2=findSubtherapeuticTime(testresult,10,3,setCo=1000)
         self.assertEqual(result,121.5)
         self.assertGreater(result2,result)
 
