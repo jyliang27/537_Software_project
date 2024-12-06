@@ -2,19 +2,22 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
+MODEL1="1 Compartment, IV"
+
 def LoadData(filepath:str):
     """
-    LoadData takes in a filename and loads the data into a dataframe. Only Excel and CSV files are accepted; other formats will return an error message.
+    LoadData takes in a filename and loads the data into a dataframe. Only Excel (.xlsx) and CSV (.csv) files are accepted; other formats will return an error message. 
+    Older Excel (.xls) files may be supported, but may require installation of dependency 'xlrd'.
     
     Input:
-    filepath: the path of the file containing experimental data. Include the file extension. Please note, data should be formatted with time and concentration in columns; all datapoints in a column should have the same units.
+    filepath: the path of the file containing experimental data. Include the file extension. Please note, data should be formatted with time and concentration in columns; all datapoints in a column should have the same units. See Test_PK.xlsx for example
 
     Output:
     Returns a dataframe containing raw experimental data. Please assign a name for this dataframe outside of the function.
     """
     if ".csv" in filepath:
-        dataframe=pd.read_excel(str(filepath))
-    if ".xlsx" in filepath:
+        dataframe=pd.read_csv(str(filepath))
+    if ".xls" in filepath:
         dataframe=pd.read_excel(str(filepath)) 
     else:
         return print("File in wrong format") 
@@ -26,7 +29,7 @@ def PrepData(dataframe:str,concentration:str,lnConc:str):
     containing the original data as well as a new column with log transformed data.
 
     Inputs:
-    dataframe: the name assigned to the dataframe containing you
+    dataframe: the name assigned to the dataframe containing your raw data
     concentration: the name of the dataframe column containing concentration data
     lnConc: the desired name of a dataframe column containing log transformed concentration data
 
@@ -50,7 +53,7 @@ def findCmax(dataframe:str,time:str, concentration:str)->float:
     This function takes in a dataframe and columns of interest, identifies the highest drug concentration in the data, and then identifies the first timepoint at which that drug concentration is measured.
 
     Inputs:
-    dataframe: name of the dataframe
+    dataframe: name of the dataframe containing log transformned concentration data
     time: name of dataframe column containing time data
     concentration: name of dataframe column containing concentration data
 
@@ -78,10 +81,10 @@ def findT_half(dataframe:str, time:str, concentration:str, thalf_threshold:float
     Note: Since data might be sparse, drug concentration at the latter time point can fall within the percent_threshold of the target value.
 
     Inputs:
-    dataframe: name of the dataframe
+    dataframe: name of the dataframe containing log transformned concentration data
     time: name of dataframe column containing time data
     concentration: name of dataframe column containing concentration data
-    percent_threshold: a percent (sign not needed) representing percent. Ex: a value of 10 should be interpreted as within 10% of target value
+    thalf_threshold: a percent (sign not needed) representing percent. Ex: a value of 10 should be interpreted as within 10% of target value
 
     Outputs:
     A float that represents the time it takes for drug concentration to decrease by roughly 50%. Units are the same as the units of the time data.
@@ -101,13 +104,13 @@ def findT_half(dataframe:str, time:str, concentration:str, thalf_threshold:float
                     break
     return t_half
 
-def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> float:
+def findCo(dataframe:str,time:str,lnConc:str, model:str=MODEL1) -> float:
     """
     This function takes in a dataframe with a column for time and a column with ln(drug concentration), fits a PK model, and returns the elimination constant k and the drug concentration at t=0.
     This function is currently only built for a 1 compartment model for IV bolus drug administration.
     
     Input:
-    dataframe: the name of the dataframe
+    dataframe: name of the dataframe containing log transformned concentration data
     time: the name of dataframe column containing time data
     lnConc: the name of the dataframe column with ln(drug concentration)
 
@@ -116,7 +119,7 @@ def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> 
     """
     x = []
     y = []
-    if model == "1 compartment, IV":
+    if model == MODEL1:
         testmodel = LinearRegression()
     for i in dataframe.index:
         tempvalue = dataframe[time][i]
@@ -133,16 +136,16 @@ def findCo(dataframe:str,time:str,lnConc:str, model:str="1 compartment, IV") -> 
     k = float(-1*testmodel.coef_)
     return Co,k
 
-def findPK(dataframe:str,time:str, concentration:str,lnConc:str, thalf_threshold:float, model:str="1 compartment, IV")->float:
+def findPK(dataframe:str,time:str, concentration:str,lnConc:str, thalf_threshold:float, model:str=MODEL1)->float:
     """
     This function takes in a dataframe, the names of any columns of interest, a percent threshold, and the desired PK model to be fit. It passes these arguments to the functions findCo, findCmax, and findT_half, and returns a 1x5 tuple with the collected function outputs.
 
     Inputs:
-    dataframe: the name of the dataframe
-    time: the name of time column
-    concentration
-    lnConc: the name of the column with ln(drug concentration)
-    percent_threshold
+    dataframe: name of the dataframe containing log transformned concentration data
+    time: the name of dataframe column containing time data
+    concentration: name of dataframe column containing concentration data
+    lnConc: the name of dataframe column with ln(drug concentration)
+    thalf_threshold: a percent (sign not needed) representing percent. Ex: a value of 10 should be interpreted as within 10% of target value
     model: keyword for the PK model to be applied.
 
     Outputs:
