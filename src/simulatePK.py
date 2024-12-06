@@ -31,6 +31,7 @@ def findSubtherapeuticTail(findPKresult:str, subther_threshold:float,  subther_t
     model: Key from modellib entered as string.
 
     Output:
+    A plot of the simulated change in drug concentration over time with the chosen Co
     A float representing the time (units consistent with experimental data) it takes for drug concentrations to reach subtherapeutic levels.
     """
     try:
@@ -72,7 +73,8 @@ def findSubtherapeuticTail(findPKresult:str, subther_threshold:float,  subther_t
                     #print("Found time to subtherapeutic tail")
                     subthertime=data[i,0]
                     breakstatement=1
-                    r.plot()
+                    r.plot(data, True, "Time","Drug Concentration")
+
                     #print("breakstatement changed",breakstatement)
                     break
     return subthertime
