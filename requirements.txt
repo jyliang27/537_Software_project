@@ -9,3 +9,5 @@ threadpoolctl
 tzdata
 joblib
 pytz
+openpyxl
+xlrd
