@@ -74,7 +74,6 @@ def findSubtherapeuticTail(findPKresult:str, subther_threshold:float,  subther_t
                     subthertime=data[i,0]
                     breakstatement=1
                     r.plot(data, True, "Time","Drug Concentration")
-
                     #print("breakstatement changed",breakstatement)
                     break
     return subthertime
