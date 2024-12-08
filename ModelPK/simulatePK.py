@@ -15,7 +15,7 @@ k=.005
 
 modellib={MODEL1:model_1C}
 
-def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_target:float, numiterations: float=1000, starttime:float=0, simruntime:float=100, setCo:float="default", modelkey:str=MODEL1):
+def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_target:float, numiterations: float=1000, starttime:float=0, simendtime:float=100, numsteps:float=51, setCo:float="default", modelkey:str=MODEL1):
     """
     Takes in extracted PK parameters, Antimony model, model parameters, and values for target subtherapeutic concentration and threshold. Simulates model and returns the first timepoint at which subtherapeutic concentration is reached--please assign this result to a variable.
     This function also generates a plot of the simulation. 
@@ -27,7 +27,8 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
     subther_target: subtherapeutic concentration of drug
     numiterations: max number of iterations allowed for function to find the time to subtherapeutic tail
     starttime: Simulation start time
-    simruntime: Simulation run time
+    simendtime: Simulation end time
+    numsteps: Number of points to simulate from starttime to simendtime
     setCo: if "default", Co is set to value extracted by findPK from experimental data. Otherwise, Co is any initial drug concentration in the body.
     modelkey: Key from modellib entered as string.
 
@@ -48,7 +49,7 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
     else:
         r['Ct']=setCo
     storeCt=r['Ct']
-    data=r.simulate(starttime,simruntime)
+    data=r.simulate(starttime,simendtime,numsteps)
     breakstatement=0
     for iteration in range(1,numiterations):
         if breakstatement==1:
