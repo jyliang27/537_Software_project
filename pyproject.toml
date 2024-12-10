@@ -19,8 +19,8 @@ classifiers = [
 dependencies = [
     "pandas",
     "numpy",
-    "matplotlib",
-    # Add other dependencies here
+    "tellurium",
+    "scikit-learn"
 ]
 
 [project.urls]
