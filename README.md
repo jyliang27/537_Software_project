@@ -19,22 +19,27 @@ PK is crucial to understanding the safety and efficacy of a drug. Every drug has
 
 ## Installation and Use
 ### Installation
-From __ run:
-pip install ModelPK
+To install ModelPK run the following command:
+    '!pip install ModelPK'
 
-Ensure that the required dependencies, listed in the requirements.txt file, are also installed.
+This should also install any required dependencies listed in the requirements.txt file.
 
 ## Use
-1. Import the following required dependencies:
-    numpy, pandas, sci-kitlearn, tellurium
+1. The dependencies below are required for ModelPK. 
+    * numpy
+    * pandas
+    * sci-kitlearn
+    * tellurium
 
-2. Import ModelPK as entire package, or 
+All required dependencies should be included when ModelPK or any of its modules is imported.
+
+2. Import ModelPK as entire package:
         'import ModelPK'
     OR import each module separately:
         'from ModelPK import extractPKparam as extract'
         'from ModelPK import simulatePK as sim'
 
-3. 
+3. See "examples" folder for sample code.
 
 ## Author’s note:
 This package is currently only supports a 1 compartment model for a drug administered as an IV bolus. In other words, the drug must: i) have been administered intravenously as a single, large dose AND ii) remain in the bloodstream and do not partition into other tissues.
