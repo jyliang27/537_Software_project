@@ -14,6 +14,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages= ['ModelPK'], 
+    packages= find_packages(), 
     package_dir={'': 'ModelPK'}
 )
