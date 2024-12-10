@@ -58,7 +58,7 @@ class TestModelPK(unittest.TestCase):
         self.assertEqual(len(result),5)
 
     def test_findSubtherapeuticTime(self):
-        result=findSubtherapeuticTime(testresult,10,3,simruntime=75)
+        result=findSubtherapeuticTime(testresult,10,3,simendtime=75)
         result2=findSubtherapeuticTime(testresult,10,3,setCo=1000)
         self.assertEqual(result,121.5)
         self.assertGreater(result2,result)

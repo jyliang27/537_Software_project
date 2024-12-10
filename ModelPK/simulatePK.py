@@ -52,9 +52,9 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
 
     if set_k=="default":
         r['k']=result[1]
-    if set_k>0:
+    elif set_k>0:
         r['k']=set_k
-    if set_k<=0:
+    elif set_k<=0:
         print("k cannot be negative")
         return
     store_k=r['k']
