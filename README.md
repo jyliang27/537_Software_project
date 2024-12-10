@@ -18,7 +18,23 @@ At any given point, the concentration of a drug in the body will be impacted by 
 PK is crucial to understanding the safety and efficacy of a drug. Every drug has a concentration above which it can have serious side effects or be toxic to patients. Likewise, every drug has a concentration below which it no longer has a therapeutic effect. As such, every drug has a therapeutic window in which it actually has a therapeutic effect for patients. Understanding PK profile of a drug allows clinicians and physicians to understand how to keep drug concentrations within this therapeutic window.
 
 ## Installation and Use
+### Installation
+From __ run:
+pip install ModelPK
 
+Ensure that the required dependencies, listed in the requirements.txt file, are also installed.
+
+## Use
+1. Import the following required dependencies:
+    numpy, pandas, sci-kitlearn, tellurium
+
+2. Import ModelPK as entire package, or 
+        'import ModelPK'
+    OR import each module separately:
+        'from ModelPK import extractPKparam as extract'
+        'from ModelPK import simulatePK as sim'
+
+3. 
 
 ## Author’s note:
 This package is currently only supports a 1 compartment model for a drug administered as an IV bolus. In other words, the drug must: i) have been administered intravenously as a single, large dose AND ii) remain in the bloodstream and do not partition into other tissues.
