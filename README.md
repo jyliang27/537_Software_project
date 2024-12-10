@@ -20,7 +20,7 @@ PK is crucial to understanding the safety and efficacy of a drug. Every drug has
 ## Installation and Use
 ### Installation
 To install ModelPK run the following command:
-    '!pip install ModelPK'
+'''!pip install ModelPK'''
 
 This should also install any required dependencies listed in the requirements.txt file.
 
@@ -34,10 +34,10 @@ This should also install any required dependencies listed in the requirements.tx
 All required dependencies should be included when ModelPK or any of its modules is imported.
 
 2. Import ModelPK as entire package:
-        'import ModelPK'
+    '''import ModelPK'''
     OR import each module separately:
-        'from ModelPK import extractPKparam as extract'
-        'from ModelPK import simulatePK as sim'
+    '''from ModelPK import extractPKparam as extract'''
+    '''from ModelPK import simulatePK as sim'''
 
 3. See "examples" folder for sample code.
 
