@@ -8,11 +8,12 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/jyliang27/ModelPK",
+    download_url="https://github.com/jyliang27/ModelPK/archive/refs/tags/v0.1.tar.gz"
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=find_packages(where='/ModelPK'),  # Specify the source directory
+    packages= ['ModelPK'],  # Specify the source directory
     package_dir={'': 'ModelPK'},
 )
