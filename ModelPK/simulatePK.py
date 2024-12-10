@@ -25,10 +25,10 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
     findPKresult: variable assigned to findPK results, input as a string
     subther_threshold: a percent (sign not needed) representing percent. Ex: a value of 10 should be interpreted as within 10% of target subtherapeutic concentration value
     subther_target: subtherapeutic concentration of drug
-    numiterations: max number of iterations allowed for function to find the time to subtherapeutic tail
-    starttime: Simulation start time
-    simendtime: Simulation end time
-    numsteps: Number of points to simulate from starttime to simendtime
+    numiterations: max number of iterations allowed for function to find the time to subtherapeutic tail; default is 1000
+    starttime: Simulation start time; default is 0
+    simendtime: Simulation end time; default is 100 units of time
+    numsteps: Number of points to simulate from starttime to simendtime; default is 51
     setCo: if "default", Co is set to value extracted by findPK from experimental data. Otherwise, Co is any initial drug concentration in the body.
     set_k: if "default", k is set to value extracted by findPK from experimental data. Otherwise, k is any elimination rate constant. k must be positive.
     modelkey: Key from modellib entered as string.
@@ -58,7 +58,7 @@ def findSubtherapeuticTime(findPKresult:str, subther_threshold:float,  subther_t
         print("k cannot be negative")
         return
     store_k=r['k']
-    
+
     data=r.simulate(starttime,simendtime,numsteps)
     breakstatement=0
     for iteration in range(1,numiterations):
