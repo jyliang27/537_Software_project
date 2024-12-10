@@ -35,6 +35,7 @@ All required dependencies should be included when ModelPK or any of its modules 
 
 2. Import ModelPK as entire package:  
     >```import ModelPK```  
+      
     OR import each module separately:  
     >```from ModelPK import extractPKparam as extract```
     >```from ModelPK import simulatePK as sim```
