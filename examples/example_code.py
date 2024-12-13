@@ -3,8 +3,9 @@
 from ModelPK import simulatePK as sim
 from ModelPK import extractPKparam as extract
 
+#Please ensure the file "Test_PK.xlsx has been downloaded into your working directory."
 #Load data into dataframe, remove null values, log transform data.
-testdf=extract.LoadData("ModelPK/Test_PK.xlsx")
+testdf=extract.LoadData("Test_PK.xlsx")
 testdf2=extract.PrepData(testdf,"IV Concentration", "LnConc")
 testdf2
 
